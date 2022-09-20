@@ -10,12 +10,14 @@ go get -u github.com/ykallan/requests
 
 
 项目源于
+
 ```shell
 go get -u github.com/Esbiya/requests
 ```
+
 更新内容
-···
-// 增加了通过xpath提取信息的功能
+···shell
+增加了通过xpath提取信息的功能
 ···
 
 ## 使用
