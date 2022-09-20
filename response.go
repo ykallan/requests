@@ -24,6 +24,7 @@ type Response struct {
 	Text     string
 	Bytes    []byte
 	err      error
+	xpathResult []string
 }
 
 var validStatusCode = [...]int{
@@ -153,3 +154,26 @@ func (r *Response) Cookie(key string) string {
 	}
 	return ""
 }
+
+func (r *Response) Xpath(expr string) *Response {
+	doc, err := htmlquery.Parse(strings.NewReader(r.Text))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	for _, node := range htmlquery.Find(doc, expr) {
+		r.xpathResult = append(r.xpathResult, node.Data)
+	}
+	return r
+}
+
+func (r *Response) Get() (string, bool) {
+	if r.xpathResult == nil {
+		return "", false
+	}
+	return r.xpathResult[0], true
+}
+
+func (r *Response) Getall() []string {
+	return r.xpathResult
+}
+
