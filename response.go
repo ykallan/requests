@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/antchfx/htmlquery"
 	"github.com/axgle/mahonia"
 	"github.com/pkg/errors"
 	"github.com/tidwall/gjson"
