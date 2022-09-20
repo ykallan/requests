@@ -158,19 +158,22 @@ func (r *Response) Cookie(key string) string {
 }
 
 func (r *Response) Xpath(expr string) *Response {
-	r.xpathResult = []string
+	r.xpathResult = make([]string, 0)
 	doc, err := htmlquery.Parse(strings.NewReader(r.Text))
 	if err != nil {
 		fmt.Println(err.Error())
+		return r
 	}
 	for _, node := range htmlquery.Find(doc, expr) {
-		r.xpathResult = append(r.xpathResult, node.Data)
+		if len(node.Data) > 0{
+			r.xpathResult = append(r.xpathResult, node.Data)
+		}
 	}
 	return r
 }
 
 func (r *Response) Get() (string, bool) {
-	if r.xpathResult == nil {
+	if len(r.xpathResult) ==0 {
 		return "", false
 	}
 	return r.xpathResult[0], true
