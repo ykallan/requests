@@ -16,9 +16,9 @@ go get -u github.com/Esbiya/requests
 ```
 
 更新内容
-···shell
+```shell
 增加了通过xpath提取信息的功能
-···
+```
 
 ## 使用
 
@@ -26,19 +26,46 @@ go get -u github.com/Esbiya/requests
 package main
 
 import (
-    "github.com/Esbiya/requests"
-    "log"
-    "net/http"
+	"fmt"
+	"github.com/ykallan/requests"
+	"log"
+	"net/http"
 )
 
+
 func main() {
+	headers := requests.Headers{
+		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36",
+	}
 	url := "https://www.baidu.com/"
-  	resp := requests.Get(url)
-	  if resp.StatusCode != http.StatusOK {
-		    log.Fatal("状态码异常")
-   	}
-   	log.Println(resp.Text)
+	resp := requests.Get(url, headers)
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		log.Fatal("状态码异常")
+	}
+	title, ok := resp.Xpath("//title/text()").Get()
+	if ok {
+		fmt.Println(title)
+	} else {
+		fmt.Println("没有提取到信息")
+	}
+
+	title2, ok := resp.Xpath("//titlexxxx/text()").Get()
+	if ok {
+		fmt.Println(title2)
+	} else {
+		fmt.Println("没有提取到信息")
+	}
+
+
 }
+
+```
+
+得到输出：
+```shell
+百度一下，你就知道
+没有提取到信息
 ```
 
 ### get 请求
