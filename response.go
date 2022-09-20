@@ -158,6 +158,7 @@ func (r *Response) Cookie(key string) string {
 }
 
 func (r *Response) Xpath(expr string) *Response {
+	r.xpathResult = []string
 	doc, err := htmlquery.Parse(strings.NewReader(r.Text))
 	if err != nil {
 		fmt.Println(err.Error())
