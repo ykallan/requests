@@ -17,7 +17,7 @@ go get -u github.com/Esbiya/requests
 
 更新内容
 ```shell
-增加了通过xpath提取信息的功能
+增加了通过xpath提取信息的功能，注意 提取信息没有加锁，可能会出问题，慎重使用
 ```
 
 ## 使用
