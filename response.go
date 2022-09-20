@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"fmt"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/antchfx/htmlquery"
